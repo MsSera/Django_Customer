@@ -1,0 +1,35 @@
+<!-- myapp/templates/myapp/review_list.html -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<a href="{% url 'review-add' %}" class="btn btn-outline-primary">Add New Review</a><br>
+<section class="all-container">
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Rating</th>
+        <th>Comment</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in reviews %}
+        <tr>
+          <td>{{ review.product }}</td>
+          <td>{{ review.rating }}</td>
+          <td>{{ review.comment }}</td>
+          <td>
+            <a href="{% url 'review-edit' review.id %}">Edit</a> |
+            <a href="{% url 'review-delete' review.id %}">Delete</a>
+        </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>  <div>
+  {% include 'includes/pagination.html' %}
+  </div>
+{% endblock %}

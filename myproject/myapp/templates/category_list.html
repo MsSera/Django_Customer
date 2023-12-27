@@ -1,0 +1,38 @@
+<!-- myapp/templates/myapp/category_list.html -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <a href="{% url 'category-add' %}" class="btn btn-outline-primary">Add New Category</a><br>
+  <section class="all-container">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Category Name</th>
+          <th>Products</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      {% for category in categories %}
+        <tr>
+          <td>{{ category.name }}</td>
+          <td>
+            <ul>
+              {% for product in category.category_related.all %}
+                <li>{{ product.name }} - {{ product.description }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td>
+            <a href="{% url 'category-edit' category.id %}">Edit</a> |
+            <a href="{% url 'category-delete' category.id %}">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </section>
+  <div>
+    {% include 'includes/pagination.html' %}
+  </div>
+{% endblock %}

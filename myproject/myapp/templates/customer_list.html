@@ -1,0 +1,42 @@
+<!-- myapp/templates/myapp/customer_list.html -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<a href="{% url 'customer-add' %}" class="btn btn-outline-primary">Add New Customer</a><br>
+<section class="all-container">
+  <table class="styled-table">
+    <tbody>
+      <tr>
+        <th>Customer Name</th>
+        <th>Email</th>
+        <th>Orders</th>
+        <th>Action</th>
+      </tr>
+      {% for customer in customers %}
+        <tr>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>
+            <ul>
+              {% for order in customer.orders.all %}
+                <li>{{ order }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td>
+            <a href="{% url 'customer-edit' customer.id %}">Edit</a> |
+            <a href="{% url 'customer-delete' customer.id %}">Delete</a>
+        </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+<div>
+  {% include 'includes/pagination.html' %}
+  </div>
+
+
+{% endblock %}

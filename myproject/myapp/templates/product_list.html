@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<a href="{% url 'product-add' %}" class="btn btn-outline-primary">Add New Product</a><br>
+<section class="cards-container">
+    <!-- Display Product Cards -->
+{% for product in products %}
+    <div class="card-box">
+        <div class="card">
+            <div class="card-type"id="product">
+                <div class="card-image"  id="product-img" >
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }} Image">
+                    {% else %}
+                        <p>No Image Available</p>
+                    {% endif %}
+                </div>
+                <div class="card-name">
+                    <h2 class="sbs">{{ product.name }}</h2>
+                    <hr />
+                </div>
+                <div class="card-rarity">
+                    <h3 class="rarity">Category:</h3>
+                    <h3 class="rarity" id="rare-text">{{ product.category.name }}</h3>
+                </div>
+                <table class="card-stats">
+                    <tbody>
+                        <tr>
+                            <th>Description:</th>
+                            <td style="word-wrap: break-word; white-space: pre-wrap;">{{ product.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>Price:</th>
+                            <td>{{ product.price }}</td>
+                        </tr>
+                        <tr>
+                            <th>Action:</th>
+                            <td>
+                                <td>
+                                    <a href="{% url 'product-edit' product.id %}" style="color: black;">Edit</a> |
+                                    <a href="{% url 'product-delete' product.id %}" style="color: black;">Delete</a>
+                                </td>                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr />
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <div>
+        {% include 'includes/pagination.html' %}
+    </div>
+</section>
+{% endblock %}

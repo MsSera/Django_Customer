@@ -1,0 +1,42 @@
+<!-- myapp/templates/myapp/order_list.html -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<a href="{% url 'order-add' %}" class="btn btn-outline-primary">Add New Order</a><br>
+<section class="all-container">
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Order Date</th>
+        <th>Total Amount</th>
+        <th>Products</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+        <tr>
+          <td>{{ order.order_date }}</td>
+          <td>{{ order.total_amount }}</td>
+          <td>
+            <ul>
+              {% for product in order.products.all %}
+                <li>{{ product }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td>
+            <a href="{% url 'order-edit' order.id %}">Edit</a> |
+            <a href="{% url 'order-delete' order.id %}">Delete</a>
+        </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+<div>
+  {% include 'includes/pagination.html' %}
+  </div>
+{% endblock %}
